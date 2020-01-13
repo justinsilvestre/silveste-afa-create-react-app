@@ -8,6 +8,8 @@
 // @remove-on-eject-end
 'use strict';
 
+const override = require('./webpackOverrides.config.js');
+
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
@@ -165,7 +167,7 @@ module.exports = function (webpackEnv) {
     return loaders;
   };
 
-  return {
+  return override({
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
     bail: isEnvProduction,
@@ -781,5 +783,5 @@ module.exports = function (webpackEnv) {
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
     performance: false,
-  };
+  }, webpackEnv);
 };
