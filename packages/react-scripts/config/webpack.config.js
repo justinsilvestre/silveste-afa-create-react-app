@@ -8,8 +8,6 @@
 // @remove-on-eject-end
 'use strict';
 
-const override = require('./webpackOverrides.config.js');
-
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
@@ -152,7 +150,7 @@ module.exports = function (webpackEnv) {
     return loaders;
   };
 
-  return override({
+  return {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
     bail: isEnvProduction,
@@ -446,6 +444,7 @@ module.exports = function (webpackEnv) {
                   isEnvDevelopment &&
                     shouldUseReactRefresh &&
                     require.resolve('react-refresh/babel'),
+                  [require.resolve('@babel/plugin-syntax-bigint')],
                 ].filter(Boolean),
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -756,8 +755,12 @@ module.exports = function (webpackEnv) {
       tls: 'empty',
       child_process: 'empty',
     },
+    externals: {
+      'better-sqlite3': 'commonjs better-sqlite3',
+      archiver: 'commonjs archiver',
+    },
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
     performance: false,
-  }, webpackEnv);
+  };
 };
