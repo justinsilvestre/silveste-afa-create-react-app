@@ -100,9 +100,7 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "electron >= 7.1.9"
     ],
     "development": [
       "last 1 chrome version",
