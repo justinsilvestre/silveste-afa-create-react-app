@@ -1,5 +1,7 @@
 'use strict';
 
+const paths = require('./paths');
+
 module.exports = function override(config) {
   config.target = 'electron-renderer'
 
